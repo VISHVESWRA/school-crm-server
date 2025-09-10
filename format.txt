@@ -1,0 +1,28 @@
+my-node-app/
+│
+├── node_modules/        # Installed packages
+├── src/                 # App source code
+│   ├── routes/          # Routes
+│   ├── controllers/     # Business logic
+│   ├── models/          # Database models
+│   ├── middlewares/     # Custom middleware
+│   └── app.js           # Main express app
+│
+├── package.json
+└── server.js            # Server entry point
+
+
+
+my-node-app/
+│
+├── src/
+│   ├── config/
+│   │   ├── config.js       # Centralized env setup
+│   │   └── db.js           # MongoDB connection
+│   ├── app.js              # Express app
+│   └── routes/             # Your routes
+│
+├── server.js
+├── .env
+├── .gitignore
+└── package.json
