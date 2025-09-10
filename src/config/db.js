@@ -1,15 +1,10 @@
 import mongoose from "mongoose";
-import config from "./config";
+import config from "./config.js";
 
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect(config.mongoUrl, {
-            useNewUserParser: true,
-            useUnifieldTopology: true
-        })
-
+        const conn = await mongoose.connect(config.mongoUrl)
         console.log(`Mango DB Connected ${conn.connection.host}`);
-
     }
     catch (e) {
         console.log(`Mongo DB Connection Fail`, e.message);
