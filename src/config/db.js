@@ -1,15 +1,22 @@
 import mongoose from "mongoose";
 import config from "./config.js";
 
-const connectDB = async () => {
+export const connectDB = async () => {
     try {
-        const conn = await mongoose.connect(config.mongoUrl)
-        console.log(`Mango DB Connected ${conn.connection.host}`);
-    }
-    catch (e) {
-        console.log(`Mongo DB Connection Fail`, e.message);
+        const conn = await mongoose.connect(config.mongoUrl);
+        console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (e) {
+        console.error(`MongoDB Connection Failed:`, e.message);
         process.exit(1);
     }
-}
+};
 
-export default connectDB;
+export const createDB = async (data, schema) => {
+    try {
+        const doc = await schema.create(data);
+        console.log("Document created:", doc);
+        return doc;
+    } catch (e) {
+        console.error("Error creating document:", e.message);
+    }
+};
