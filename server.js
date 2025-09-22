@@ -6,6 +6,8 @@ import config from "./src/config/config.js";
 import { connectDB, createDB } from "./src/config/db.js";
 import mongoose from "mongoose";
 import fs from "fs";
+import { authorizeRoles } from "./src/middlewares/RoleValidate.js";
+import authRouter from "./src/auth/AuthRoutes.js";
 
 const app = exp();
 app.use(bp.json());
@@ -26,6 +28,9 @@ const mySchema = new mongoose.Schema({
 });
 const mymod = mongoose.model("teachersList", mySchema);
 
+const router = exp.Router();
+
+
 app.post("/api/teachers", async (req, res) => {
   const oldList = JSON.parse(
     fs.readFileSync("src/jsonFile/teachersList.json", "utf8")
@@ -41,10 +46,20 @@ app.post("/api/teachers", async (req, res) => {
 });
 
 app.get("/api/teachers", async (req, res) => {
-  console.log("get");
-
   res.send(await mymod.find());
 });
+
+app.use("/api/auth", authRouter);
+
+router.get(
+  "/admin-data",
+  // protect,
+  authorizeRoles("admin"),
+  (req, res) => {
+    res.json({ message: "Admin data visible" });
+  }
+);
+
 
 app.listen(config.port);
 console.log(`http://localhost:${config.port}`);

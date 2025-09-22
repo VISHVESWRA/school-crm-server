@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const loginSchema = new mongoose.Schema(
   {
-    namd: { type: Strubg, required: true, unique: false, trim: true },
-    email: { type: String, required: true, unique: true, trim: true },
-    password: { type: String, required: true, unique: false, trim: true },
+    name: { type: String, required: true, unique: false },
+    email: { type: String, required: false, unique: true },
+    password: { type: String, required: false, unique: false },
     role: {
       type: String,
-      required: true,
+      required: false,
       enum: ["admin", "teacher", "students"],
     },
   },
