@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import UserLogin from "../models/UserModel.js"
+import UserLogin from "../models/UserModel.js";
 
 // export const Register = async (req, res) => {
 //   try {
@@ -27,20 +27,16 @@ import UserLogin from "../models/UserModel.js"
 
 export const Login = async (req, res) => {
   try {
-    const newPassword = "vish123";
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    console.log(hashedPassword);
-
     const { name, password } = req.body;
     const userExist = await UserLogin.findOne({ name });
     if (!userExist) {
-      res.status(400).json({ message: "User does not exist" });
+      return res.status(400).json({ message: "User does not exist" });
     }
 
     const isPassword = await bcrypt.compare(password, userExist.password);
 
     if (!isPassword) {
-      res.status(400).json({ message: "Password does not match" });
+      return res.status(400).json({ message: "Password does not match" });
     }
 
     const token = jwt.sign(
