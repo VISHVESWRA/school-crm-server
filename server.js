@@ -48,6 +48,57 @@ app.get("/api/teachers", async (req, res) => {
   res.send(await mymod.find());
 });
 
+app.get("/api/teachers/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid teacher ID" });
+  }
+  try {
+    const teacher = await mymod.findById(id);
+
+    if (!teacher) {
+      return res.status(404).json({ error: "Teacher not found" });
+    }
+
+    res.json(teacher);
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.delete("/api/teachers/:pid", async (req, res) => {
+  try {
+    const teachers = await mymod.findByIdAndDelete(req.params.pid);
+    if (!teachers) {
+      return res.status(404).json({ error: "Teacher not found" })
+    };
+    res.json({ message: "Teacher deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+})
+
+app.put("/api/teachers/:id", async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+  console.log(updateData);
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid teacher ID" });
+  }
+  try {
+    const teacher = await mymod.findByIdAndUpdate(id, updateData, { new: true });
+    if (!teacher) {
+      return res.status(404).json({ error: "Teacher not found" });
+    }
+
+    res.json(teacher);
+  }
+  catch (e) {
+    res.status(500).json({ error: err.message });
+  }
+})
+
 app.use("/api/auth", authRouter);
 
 router.get(
