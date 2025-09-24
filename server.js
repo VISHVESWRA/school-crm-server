@@ -30,16 +30,15 @@ const mymod = mongoose.model("teachersList", mySchema);
 
 const router = exp.Router();
 
-
 app.post("/api/teachers", async (req, res) => {
-  const oldList = JSON.parse(
-    fs.readFileSync("src/jsonFile/teachersList.json", "utf8")
-  );
-  oldList.push(req.body);
-  await fs.writeFileSync(
-    "src/jsonFile/teachersList.json",
-    JSON.stringify(oldList, null, 2)
-  );
+  // const oldList = JSON.parse(
+  //   fs.readFileSync("src/jsonFile/teachersList.json", "utf8")
+  // );
+  // oldList.push(req.body);
+  // await fs.writeFileSync(
+  //   "src/jsonFile/teachersList.json",
+  //   JSON.stringify(oldList, null, 2)
+  // );
 
   createDB(req.body, mymod);
   res.send("success");
@@ -59,7 +58,6 @@ router.get(
     res.json({ message: "Admin data visible" });
   }
 );
-
 
 app.listen(config.port);
 console.log(`http://localhost:${config.port}`);
