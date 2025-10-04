@@ -27,7 +27,7 @@ export const userSchema = Joi.object({
         }),
 
     role: Joi.string()
-        .valid("student", "teacher", "admin"),
+        .valid("student", "user", "admin"),
     // .default("student"), 
 
     age: Joi.number()

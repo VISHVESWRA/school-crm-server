@@ -22,11 +22,11 @@ export default router;
 // );
 
 // router.get(
-//   "/teacher-dashboard",
+//   "/user-dashboard",
 //   protect,
-//   authorizeRoles("teacher", "admin"),  // teachers & admins allowed
+//   authorizeRoles("user", "admin"),  // users & admins allowed
 //   (req, res) => {
-//     res.json({ message: "Teacher dashboard data" });
+//     res.json({ message: "User dashboard data" });
 //   }
 // );
 
@@ -35,7 +35,7 @@ export default router;
 // app.get("/api/dashboard", protect, (req, res) => {
 //   if (req.user.role === "admin") {
 //     res.json({ usersCount: 500, feesCollected: 200000 });
-//   } else if (req.user.role === "teacher") {
+//   } else if (req.user.role === "user") {
 //     res.json({ classes: ["10A", "10B"], attendanceToday: 85 });
 //   } else if (req.user.role === "student") {
 //     res.json({ timetable: [...], marks: [...] });

@@ -26,17 +26,17 @@ const mySchema = new mongoose.Schema({
   city: { type: String, unique: false, trim: true },
   zip: { type: String, unique: false, trim: true },
 });
-const mymod = mongoose.model("teachersList", mySchema);
+const mymod = mongoose.model("usersList", mySchema);
 
 const router = exp.Router();
 
-app.post("/api/teachers", async (req, res) => {
+app.post("/api/users", async (req, res) => {
   // const oldList = JSON.parse(
-  //   fs.readFileSync("src/jsonFile/teachersList.json", "utf8")
+  //   fs.readFileSync("src/jsonFile/usersList.json", "utf8")
   // );
   // oldList.push(req.body);
   // await fs.writeFileSync(
-  //   "src/jsonFile/teachersList.json",
+  //   "src/jsonFile/usersList.json",
   //   JSON.stringify(oldList, null, 2)
   // );
 
@@ -44,55 +44,55 @@ app.post("/api/teachers", async (req, res) => {
   res.send("success");
 });
 
-app.get("/api/teachers", async (req, res) => {
+app.get("/api/users", async (req, res) => {
   res.send(await mymod.find());
 });
 
-app.get("/api/teachers/:id", async (req, res) => {
+app.get("/api/users/:id", async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: "Invalid teacher ID" });
+    return res.status(400).json({ error: "Invalid user ID" });
   }
   try {
-    const teacher = await mymod.findById(id);
+    const user = await mymod.findById(id);
 
-    if (!teacher) {
-      return res.status(404).json({ error: "Teacher not found" });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    res.json(teacher);
+    res.json(user);
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-app.delete("/api/teachers/:pid", async (req, res) => {
+app.delete("/api/users/:pid", async (req, res) => {
   try {
-    const teachers = await mymod.findByIdAndDelete(req.params.pid);
-    if (!teachers) {
-      return res.status(404).json({ error: "Teacher not found" })
+    const users = await mymod.findByIdAndDelete(req.params.pid);
+    if (!users) {
+      return res.status(404).json({ error: "User not found" })
     };
-    res.json({ message: "Teacher deleted" });
+    res.json({ message: "User deleted" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 })
 
-app.put("/api/teachers/:id", async (req, res) => {
+app.put("/api/users/:id", async (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
   console.log(updateData);
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: "Invalid teacher ID" });
+    return res.status(400).json({ error: "Invalid user ID" });
   }
   try {
-    const teacher = await mymod.findByIdAndUpdate(id, updateData, { new: true });
-    if (!teacher) {
-      return res.status(404).json({ error: "Teacher not found" });
+    const user = await mymod.findByIdAndUpdate(id, updateData, { new: true });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    res.json(teacher);
+    res.json(user);
   }
   catch (e) {
     res.status(500).json({ error: err.message });

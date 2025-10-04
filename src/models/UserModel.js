@@ -8,7 +8,7 @@ const loginSchema = new mongoose.Schema(
     role: {
       type: String,
       required: false,
-      enum: ["admin", "teacher", "students"],
+      enum: ["admin", "user", "students"],
     },
   },
   { timestamps: true }
