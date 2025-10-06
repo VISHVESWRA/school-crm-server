@@ -82,8 +82,6 @@ app.delete("/api/users/:pid", async (req, res) => {
 app.put("/api/users/:id", async (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
-  console.log(updateData);
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid user ID" });
   }
