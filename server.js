@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import fs from "fs";
 import { authorizeRoles } from "./src/middlewares/RoleValidate.js";
 import authRouter from "./src/auth/AuthRoutes.js";
+import studentRoutes from "./src/routes/StudentRoutes.js";
 
 const app = exp();
 app.use(bp.json());
@@ -70,13 +71,13 @@ app.delete("/api/users/:pid", async (req, res) => {
   try {
     const users = await mymod.findByIdAndDelete(req.params.pid);
     if (!users) {
-      return res.status(404).json({ error: "User not found" })
-    };
+      return res.status(404).json({ error: "User not found" });
+    }
     res.json({ message: "User deleted" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-})
+});
 
 app.put("/api/users/:id", async (req, res) => {
   const { id } = req.params;
@@ -93,13 +94,13 @@ app.put("/api/users/:id", async (req, res) => {
     }
 
     res.json(user);
-  }
-  catch (e) {
+  } catch (e) {
     res.status(500).json({ error: err.message });
   }
-})
+});
 
 app.use("/api/auth", authRouter);
+app.use("/api/students", studentRoutes);
 
 router.get(
   "/admin-data",
