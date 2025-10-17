@@ -9,6 +9,8 @@ import fs from "fs";
 import { authorizeRoles } from "./src/middlewares/RoleValidate.js";
 import authRouter from "./src/auth/AuthRoutes.js";
 import studentRoutes from "./src/routes/StudentRoutes.js";
+import courseRoutes from "./src/routes/CourseRoutes.js";
+import dashboardRoutes from "./src/models/getDataModel.js";
 
 const app = exp();
 app.use(bp.json());
@@ -27,7 +29,7 @@ const mySchema = new mongoose.Schema({
   city: { type: String, unique: false, trim: true },
   zip: { type: String, unique: false, trim: true },
 });
-const mymod = mongoose.model("usersList", mySchema);
+export const mymod = mongoose.model("usersList", mySchema);
 
 const router = exp.Router();
 
@@ -99,6 +101,8 @@ app.put("/api/users/:id", async (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/students", studentRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 router.get(
   "/admin-data",
