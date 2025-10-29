@@ -43,9 +43,6 @@ app.post("/api/users", async (req, res) => {
   //   JSON.stringify(oldList, null, 2)
   // );
 
-  console.log(req.bnody);
-  
-
   createDB(req.body, mymod);
   res.send("success");
 });

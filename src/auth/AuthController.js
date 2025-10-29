@@ -2,28 +2,45 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import UserLogin from "../models/UserModel.js";
 
-// export const Register = async (req, res) => {
-//   try {
-//     const { name, email, password, role } = req.body;
-//     const alreadyExist = await UserLogin.findOne({ email });
-//     if (alreadyExist) {
-//       res.status(400).json({ message: "User already exists:`" });
-//     }
+export const Register = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-//     const hashedPassword = bcrypt.hash(password, 10);
+    console.log(req);
 
-//     const newUser = await UserLogin.create({
-//       name,
-//       email,
-//       password: hashedPassword,
-//       role,
-//     });
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
+    }
 
-//     res.status(201).json({ message: "User registered successfully" });
-//   } catch (e) {
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
+    const hashedPassword = bcrypt.hash(password, 10);
+    const alreadyExist = await UserLogin.findOne({ email });
+
+    if (existingUser) {
+      // Update existing user's password
+      alreadyExist.password = hashedPassword;
+      await alreadyExist.save();
+      console.log(alreadyExist);
+
+      return res.status(200).json({
+        message: "Password reset successfully",
+        user: { email: alreadyExist.email },
+      });
+    }
+
+    // const newUser = await UserLogin.create({
+    //   name,
+    //   email,
+    //   password: hashedPassword,
+    //   role,
+    // });
+
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (e) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 export const Login = async (req, res) => {
   try {
