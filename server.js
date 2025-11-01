@@ -22,7 +22,9 @@ connectDB();
 const mySchema = new mongoose.Schema({
   firstName: { type: String, required: true, unique: false, trim: true },
   lastName: { type: String, required: true, unique: false, trim: true },
+  email: { type: String, required: true, unique: false, trim: true },
   phoneNumber: { type: String, required: true, unique: false, trim: true },
+  password: { type: String, required: true, unique: false, trim: true },
   role: { type: String, required: true, unique: false, trim: true },
   dateOfJoin: { type: String, unique: false, trim: true },
   state: { type: String, unique: false, trim: true },
@@ -52,6 +54,8 @@ app.get("/api/users", async (req, res) => {
 });
 
 app.get("/api/users/:id", async (req, res) => {
+  console.log(req.params);
+
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid user ID" });
