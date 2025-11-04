@@ -20,6 +20,10 @@ app.use(cors());
 
 connectDB();
 
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
 const mySchema = new mongoose.Schema({
   firstName: { type: String, required: true, unique: false, trim: true },
   lastName: { type: String, required: true, unique: false, trim: true },
