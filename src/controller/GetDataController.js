@@ -1,6 +1,6 @@
 import Student from "../models/studentModel.js";
 import Course from "../models/courseModel.js";
-import { mymod } from "../../server.js";
+import {mymod} from "../models/UserModel.js";
 
 export const getDashboardStats = async (req, res) => {
   try {
@@ -15,6 +15,6 @@ export const getDashboardStats = async (req, res) => {
       users: userCount,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({message: error.message});
   }
 };
