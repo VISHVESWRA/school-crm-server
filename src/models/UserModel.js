@@ -1,37 +1,59 @@
 import mongoose from "mongoose";
 
-const loginSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
-    name: {type: String, required: false, unique: false},
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true, unique: false},
+    name: String,
+    email: { type: String, unique: true },
+    password: String,
     role: {
       type: String,
-      required: false,
-      enum: ["admin", "user", "students"],
+      enum: ["student", "staff", "admin", "superadmin"],
+      default: "student",
     },
+
+    // 🔐 Forgot password fields
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
   },
-  {timestamps: true}
+  { timestamps: true },
 );
-export default mongoose.model("UserLogin", loginSchema);
 
-// Verify Email
-const mySchema = new mongoose.Schema({
-  email: {type: String, required: true, unique: true},
-});
-export const verifyEmailModel = mongoose.model("verifyEmail", mySchema);
+export default mongoose.model("User", userSchema);
 
-const userSchema = new mongoose.Schema({
-  firstName: {type: String, required: true, unique: false, trim: true},
-  lastName: {type: String, required: true, unique: false, trim: true},
-  email: {type: String, required: true, unique: false, trim: true},
-  phoneNumber: {type: String, required: true, unique: false, trim: true},
-  gender: {type: String, required: true, unique: false},
-  password: {type: String, required: true, unique: false, trim: true},
-  role: {type: String, required: true, unique: false, trim: true},
-  dateOfJoin: {type: String, unique: false, trim: true},
-  state: {type: String, unique: false, trim: true},
-  city: {type: String, unique: false, trim: true},
-  zip: {type: String, unique: false, trim: true},
-});
-export const mymod = mongoose.model("usersList", userSchema);
+// import mongoose from "mongoose";
+
+// const loginSchema = new mongoose.Schema(
+//   {
+//     name: {type: String, required: false, unique: false},
+//     email: {type: String, required: true, unique: true},
+//     password: {type: String, required: true, unique: false},
+//     role: {
+//       type: String,
+//       required: false,
+//       enum: ["admin", "user", "students"],
+//     },
+//   },
+//   {timestamps: true}
+// );
+// export default mongoose.model("UserLogin", loginSchema);
+
+// // Verify Email
+// const mySchema = new mongoose.Schema({
+//   email: {type: String, required: true, unique: true},
+// });
+// export const verifyEmailModel = mongoose.model("verifyEmail", mySchema);
+
+// const userSchema = new mongoose.Schema({
+//   firstName: {type: String, required: true, unique: false, trim: true},
+//   lastName: {type: String, required: true, unique: false, trim: true},
+//   email: {type: String, required: true, unique: false, trim: true},
+//   phoneNumber: {type: String, required: true, unique: false, trim: true},
+//   gender: {type: String, required: true, unique: false},
+//   password: {type: String, required: true, unique: false, trim: true},
+//   role: {type: String, required: true, unique: false, trim: true},
+//   dateOfJoin: {type: String, unique: false, trim: true},
+//   state: {type: String, unique: false, trim: true},
+//   city: {type: String, unique: false, trim: true},
+//   zip: {type: String, unique: false, trim: true},
+// });
+// export const mymod = mongoose.model("usersList", userSchema);

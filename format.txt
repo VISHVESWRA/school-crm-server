@@ -1,28 +1,27 @@
-my-node-app/
+backend/
 │
-├── node_modules/        # Installed packages
-├── src/                 # App source code
-│   ├── routes/          # Routes
-│   ├── controllers/     # Business logic
-│   ├── models/          # Database models
-│   ├── middlewares/     # Custom middleware
-│   └── app.js           # Main express app
+├── config/
+│   └── db.js
 │
-├── package.json
-└── server.js            # Server entry point
-
-
-
-my-node-app/
+├── controllers/
+│   └── authController.js
 │
-├── src/
-│   ├── config/
-│   │   ├── config.js       # Centralized env setup
-│   │   └── db.js           # MongoDB connection
-│   ├── app.js              # Express app
-│   └── routes/             # Your routes
+├── models/
+│   └── User.js
 │
-├── server.js
+├── routes/
+│   └── authRoutes.js
+│
+├── middleware/
+│   ├── authMiddleware.js
+│   └── roleMiddleware.js
+│
+├── utils/
+│   └── generateToken.js
+│
+├── seed/
+│   └── superAdmin.js
+│
 ├── .env
-├── .gitignore
-└── package.json
+├── server.js
+├── package.json
