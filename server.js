@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./src/routes/AuthRoutes.js";
+import userRoutes from "./src/routes/UserRoutes.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 
 // Server
 const PORT = process.env.PORT || 5000;

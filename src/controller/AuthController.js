@@ -4,39 +4,39 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import sendEmail from "../utils/SendEmail.js";
 
-// REGISTER
-export const registerUser = async (req, res) => {
-  try {
-    const { name, email, password, role } = req.body;
+// // REGISTER
+// export const registerUser = async (req, res) => {
+//   try {
+//     const { name, email, password, role } = req.body;
 
-    const exist = await User.findOne({ email });
-    if (exist) {
-      return res.status(400).json({ message: "Email already exists" });
-    }
+//     const exist = await User.findOne({ email });
+//     if (exist) {
+//       return res.status(400).json({ message: "Email already exists" });
+//     }
 
-    const hashed = await bcrypt.hash(password, 10);
+//     const hashed = await bcrypt.hash(password, 10);
 
-    // role control
-    let assignedRole = "student";
-    if (role === "staff") assignedRole = "staff";
-    if (role === "admin") assignedRole = "admin";
+//     // role control
+//     let assignedRole = "student";
+//     if (role === "staff") assignedRole = "staff";
+//     if (role === "admin") assignedRole = "admin";
 
-    if (role === "superadmin") {
-      return res.status(403).json({ message: "Not allowed" });
-    }
+//     if (role === "superadmin") {
+//       return res.status(403).json({ message: "Not allowed" });
+//     }
 
-    const user = await User.create({
-      name,
-      email,
-      password: hashed,
-      role: assignedRole,
-    });
+//     const user = await User.create({
+//       name,
+//       email,
+//       password: hashed,
+//       role: assignedRole,
+//     });
 
-    res.status(201).json(user);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+//     res.status(201).json(user);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
 
 // LOGIN
 export const loginUser = async (req, res) => {
