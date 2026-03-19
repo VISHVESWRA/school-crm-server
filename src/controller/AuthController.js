@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import sendEmail from "../utils/SendEmail.js";
+import { log } from "console";
 
 // // REGISTER
 // export const registerUser = async (req, res) => {
@@ -46,6 +47,9 @@ export const loginUser = async (req, res) => {
     console.log("Login attempt:", email);
 
     const user = await User.findOne({ email });
+
+    console.log("user", user);
+
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -142,5 +146,28 @@ export const resetPassword = async (req, res) => {
     res.json({ message: "Password reset successful" });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+// REFRESH TOKEN
+export const refreshToken = (req, res) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    return res.status(401).json({ message: "No refresh token" });
+  }
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+
+    const newAccessToken = jwt.sign(
+      { id: decoded.id, role: decoded.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+
+    res.json({ accessToken: newAccessToken });
+  } catch {
+    res.status(403).json({ message: "Invalid refresh token" });
   }
 };
